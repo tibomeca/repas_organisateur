@@ -1,1 +1,773 @@
-https://gemini.google.com/share/018842e97343
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Qui Apporte Quoi ?</title>
+
+    <!-- Chargement de Tailwind CSS -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+ 
+
+    <!-- PWA: Liens vers le Manifest -->
+
+    <link rel="manifest" href="data:application/json;base64,eyJpY29ucyI6IFt7InNpemVzIjogIjE5MngxOTAiLCAidHlwZSI6ICJpbWFnZS9wbmciLCAic3JjIjogImh0dHBzOi8vcGxhY2Vob2xkLmNvLzE5MngxOTA/dGV4dD1QTCZiZz01RTRCNkQmdGN9RnVudD01MCJ9XSwgIm5hbWUiOiAiUXVpIEFwcG9ydGUgUXVvaSA/IiwgInNob3J0X25hbWUiOiAiUmVwYXMiLCAic3RhcnRfdXJsIjogIi8iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2Y3ZjlmYiIsICJ0aGVtZV9jb2xvciI6ICIjMjk1MThkIn0=">
+
+    <!-- PWA: Icône pour l'écran d'accueil (utilisé comme fallback) -->
+
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/5E4B6D/FFFFFF?text=PL&font=Montserrat">
+
+    <!-- PWA: Thème de couleur pour la barre d'adresse sur mobile -->
+
+    <meta name="theme-color" content="#29518d">
+
+ 
+
+    <style>
+
+        /* Configuration de la police Inter */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background-color: #f7f9fb;
+
+        }
+
+        /* Style pour les zones de texte (textarea) */
+
+        textarea {
+
+            resize: vertical;
+
+        }
+
+        .card {
+
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+        }
+
+    </style>
+
+</head>
+
+<body class="p-4 sm:p-8 min-h-screen">
+
+ 
+
+    <div class="max-w-4xl mx-auto">
+
+        <header class="text-center mb-10">
+
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Qui Apporte Quoi ? 🍕🍹</h1>
+
+            <p class="text-lg text-gray-600">Laissez l'aléatoire décider pour vous. Listez, mélangez, partagez !</p>
+
+        </header>
+
+ 
+
+        <!-- Section de Saisie des Données -->
+
+        <div class="bg-white p-6 md:p-8 rounded-xl card mb-10">
+
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">1. Entrez les informations</h2>
+
+            
+
+            <!-- Zone des Participants -->
+
+            <div class="mb-6">
+
+                <label for="participants" class="block text-sm font-medium text-gray-700 mb-2">
+
+                    Participants (un nom par ligne)
+
+                </label>
+
+                <textarea id="participants" rows="3" placeholder="Ex: Jean&#10;Marie&#10;Pierre" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+
+            </div>
+
+ 
+
+            <!-- Zones des Items (Plats, Boissons et Matériel) -->
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div>
+
+                    <label for="food" class="block text-sm font-medium text-gray-700 mb-2">
+
+                        Plats à apporter (un plat par ligne)
+
+                    </label>
+
+                    <textarea id="food" rows="5" placeholder="Ex: Salade composée&#10;Quiche lorraine&#10;Dessert au chocolat" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+
+                </div>
+
+                <div>
+
+                    <label for="drinks" class="block text-sm font-medium text-gray-700 mb-2">
+
+                        Boissons à apporter (une boisson par ligne)
+
+                    </label>
+
+                    <textarea id="drinks" rows="5" placeholder="Ex: Vin rouge&#10;Bière artisanale&#10;Jus de fruits" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+
+                </div>
+
+                <div>
+
+                    <label for="material" class="block text-sm font-medium text-gray-700 mb-2">
+
+                        Matériel ou Divers (un item par ligne)
+
+                    </label>
+
+                    <textarea id="material" rows="5" placeholder="Ex: Glacière&#10;Jeu de société&#10;Enceinte Bluetooth" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+
+                </div>
+
+            </div>
+
+ 
+
+            <button onclick="assignItems()" 
+
+                    class="mt-8 w-full px-6 py-3 bg-green-600 text-white font-bold rounded-xl text-lg hover:bg-green-700 transition duration-200 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transform hover:scale-[1.01]">
+
+                2. Répartir les Tâches au Hasard !
+
+            </button>
+
+        </div>
+
+ 
+
+        <!-- Section des Résultats -->
+
+        <div id="results-section" class="bg-white p-6 md:p-8 rounded-xl card" style="display: none;">
+
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">3. La Répartition Aléatoire</h2>
+
+            <div id="assignment-output" class="space-y-4">
+
+                <!-- Les résultats seront insérés ici par JavaScript -->
+
+            </div>
+
+            <div class="mt-8 text-center">
+
+                <button onclick="copyResults()" 
+
+                        class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200 text-sm">
+
+                    <span id="copy-text">Copier les résultats</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+ 
+
+        <!-- Message d'Erreur (Modal-like) -->
+
+        <div id="error-message" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" style="display: none;">
+
+            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-xl relative max-w-sm w-full" role="alert">
+
+                <strong class="font-bold">Attention !</strong>
+
+                <span id="error-content" class="block sm:inline ml-2"></span>
+
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="document.getElementById('error-message').style.display='none'">
+
+                    <svg class="fill-current h-6 w-6 text-yellow-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.697l-2.651 3.152a1.2 1.2 0 1 1-1.697-1.697l3.152-2.651-3.152-2.651a1.2 1.2 0 0 1 1.697-1.697l2.651 3.152 2.651-3.152a1.2 1.2 0 0 1 1.697 1.697L11.697 10l3.152 2.651a1.2 1.2 0 0 1 0 1.698z"/></svg>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+ 
+
+    <script>
+
+        // PWA: Définition du code du Service Worker en ligne
+
+        const serviceWorkerCode = `
+
+            // Nom du cache pour cette version de l'application
+
+            const CACHE_NAME = 'repas-organisateur-cache-v2';
+
+            // Ressources essentielles à mettre en cache
+
+            const urlsToCache = [
+
+                '/',
+
+                'https://cdn.tailwindcss.com',
+
+                'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
+
+            ];
+
+ 
+
+            // Événement 'install': se produit lorsque le Service Worker est installé
+
+            self.addEventListener('install', event => {
+
+                event.waitUntil(
+
+                    caches.open(CACHE_NAME)
+
+                        .then(cache => {
+
+                            console.log('Service Worker: Fichiers de base mis en cache.');
+
+                            return cache.addAll(urlsToCache);
+
+                        })
+
+                );
+
+            });
+
+ 
+
+            // Événement 'fetch': intercepte toutes les requêtes réseau
+
+            self.addEventListener('fetch', event => {
+
+                event.respondWith(
+
+                    caches.match(event.request)
+
+                        .then(response => {
+
+                            if (response) {
+
+                                return response;
+
+                            }
+
+                            return fetch(event.request).then(
+
+                                response => {
+
+                                    if(!response || response.status !== 200 || response.type !== 'basic') {
+
+                                        return response;
+
+                                    }
+
+                                    
+
+                                    const responseToCache = response.clone();
+
+                                    caches.open(CACHE_NAME)
+
+                                        .then(cache => {
+
+                                            cache.put(event.request, responseToCache);
+
+                                        });
+
+ 
+
+                                    return response;
+
+                                }
+
+                            );
+
+                        })
+
+                );
+
+            });
+
+ 
+
+            // Événement 'activate': se produit lorsque le Service Worker est activé
+
+            self.addEventListener('activate', event => {
+
+                const cacheWhitelist = [CACHE_NAME];
+
+                event.waitUntil(
+
+                    caches.keys().then(cacheNames => {
+
+                        return Promise.all(
+
+                            cacheNames.map(cacheName => {
+
+                                if (cacheWhitelist.indexOf(cacheName) === -1) {
+
+                                    return caches.delete(cacheName);
+
+                                }
+
+                            })
+
+                        );
+
+                    })
+
+                );
+
+            });
+
+        `;
+
+ 
+
+        // PWA: Enregistrement du Service Worker
+
+        if ('serviceWorker' in navigator) {
+
+            const blob = new Blob([serviceWorkerCode], { type: 'application/javascript' });
+
+            const swUrl = URL.createObjectURL(blob);
+
+ 
+
+            window.addEventListener('load', () => {
+
+                navigator.serviceWorker.register(swUrl)
+
+                    .then(registration => {
+
+                        console.log('Service Worker enregistré avec succès:', registration);
+
+                        loadFromLocalStorage(); // Charger les données après l'enregistrement
+
+                    })
+
+                    .catch(error => {
+
+                        console.error('Échec de l\'enregistrement du Service Worker:', error);
+
+                        loadFromLocalStorage(); // Charger les données même si l'enregistrement échoue
+
+                    });
+
+            });
+
+        } else {
+
+             // Si Service Worker non supporté, charger les données directement
+
+             window.addEventListener('load', loadFromLocalStorage);
+
+        }
+
+ 
+
+        // --- NOUVELLES FONCTIONS DE GESTION DU LOCAL STORAGE ---
+
+ 
+
+        /**
+
+         * Sauvegarde le contenu des champs de texte dans le stockage local.
+
+         */
+
+        function saveToLocalStorage() {
+
+            localStorage.setItem('participants', document.getElementById('participants').value);
+
+            localStorage.setItem('food', document.getElementById('food').value);
+
+            localStorage.setItem('drinks', document.getElementById('drinks').value);
+
+            localStorage.setItem('material', document.getElementById('material').value);
+
+        }
+
+ 
+
+        /**
+
+         * Charge le contenu des champs de texte depuis le stockage local.
+
+         */
+
+        function loadFromLocalStorage() {
+
+            document.getElementById('participants').value = localStorage.getItem('participants') || '';
+
+            document.getElementById('food').value = localStorage.getItem('food') || '';
+
+            document.getElementById('drinks').value = localStorage.getItem('drinks') || '';
+
+            document.getElementById('material').value = localStorage.getItem('material') || '';
+
+        }
+
+ 
+
+        // --- LOGIQUE JAVASCRIPT EXISTANTE (mise à jour pour la persistance) ---
+
+        
+
+        /**
+
+         * Fonction utilitaire pour mélanger un tableau (Algorithme de Fisher-Yates).
+
+         * @param {Array<string>} array Le tableau à mélanger.
+
+         * @returns {Array<string>} Le tableau mélangé.
+
+         */
+
+        function shuffle(array) {
+
+            let currentIndex = array.length, randomIndex;
+
+            while (currentIndex !== 0) {
+
+                randomIndex = Math.floor(Math.random() * currentIndex);
+
+                currentIndex--;
+
+                [array[currentIndex], array[randomIndex]] = [
+
+                    array[randomIndex], array[currentIndex]];
+
+            }
+
+            return array;
+
+        }
+
+ 
+
+        /**
+
+         * Affiche un message d'erreur temporaire dans une "boîte de dialogue".
+
+         * @param {string} message Le message d'erreur à afficher.
+
+         */
+
+        function showErrorMessage(message) {
+
+            const errorElement = document.getElementById('error-message');
+
+            document.getElementById('error-content').textContent = message;
+
+            errorElement.style.display = 'flex';
+
+            
+
+            // Masquer après 4 secondes
+
+            setTimeout(() => {
+
+                errorElement.style.display = 'none';
+
+            }, 4000);
+
+        }
+
+ 
+
+        /**
+
+         * Lance le processus d'attribution aléatoire des tâches.
+
+         */
+
+        function assignItems() {
+
+            // Sauvegarde des données avant le traitement
+
+            saveToLocalStorage(); 
+
+            
+
+            // 1. Récupération et nettoyage des entrées
+
+            const participantsText = document.getElementById('participants').value;
+
+            const foodText = document.getElementById('food').value;
+
+            const drinksText = document.getElementById('drinks').value;
+
+            const materialText = document.getElementById('material').value;
+
+ 
+
+            // Nettoyer les listes (supprimer les lignes vides/espaces superflus)
+
+            const participants = participantsText.split('\n')
+
+                .map(name => name.trim())
+
+                .filter(name => name.length > 0);
+
+ 
+
+            let foodItems = foodText.split('\n')
+
+                .map(item => item.trim())
+
+                .filter(item => item.length > 0);
+
+ 
+
+            let drinkItems = drinksText.split('\n')
+
+                .map(item => item.trim())
+
+                .filter(item => item.length > 0);
+
+                
+
+            let materialItems = materialText.split('\n')
+
+                .map(item => item.trim())
+
+                .filter(item => item.length > 0);
+
+ 
+
+ 
+
+            // 2. Validation des entrées
+
+            if (participants.length === 0) {
+
+                showErrorMessage("Veuillez entrer au moins un participant.");
+
+                return;
+
+            }
+
+            if (foodItems.length === 0 && drinkItems.length === 0 && materialItems.length === 0) {
+
+                showErrorMessage("Veuillez entrer au moins un plat, une boisson ou un élément de matériel.");
+
+                return;
+
+            }
+
+ 
+
+            // 3. Préparation pour l'attribution
+
+            const allItems = [...foodItems, ...drinkItems, ...materialItems];
+
+            const totalItems = allItems.length;
+
+            const totalParticipants = participants.length;
+
+ 
+
+            if (totalItems === 0) {
+
+                 document.getElementById('results-section').style.display = 'block';
+
+                 document.getElementById('assignment-output').innerHTML = '<p class="text-center text-gray-500">Aucun plat, boisson ou matériel à attribuer.</p>';
+
+                 return;
+
+            }
+
+ 
+
+            // Mélanger les items et les participants pour une distribution équitable et aléatoire
+
+            shuffle(allItems);
+
+            shuffle(participants); 
+
+ 
+
+            // Initialiser le tableau d'affectation
+
+            const assignments = {};
+
+            participants.forEach(p => assignments[p] = []);
+
+ 
+
+            // 4. Attribution cyclique
+
+            for (let i = 0; i < totalItems; i++) {
+
+                const item = allItems[i];
+
+                const participantIndex = i % totalParticipants;
+
+                const participant = participants[participantIndex];
+
+                
+
+                assignments[participant].push(item);
+
+            }
+
+ 
+
+            // 5. Affichage des résultats
+
+            displayResults(assignments);
+
+        }
+
+ 
+
+        /**
+
+         * Génère le HTML pour afficher les attributions.
+
+         * @param {Object<string, Array<string>>} assignments L'objet d'attribution.
+
+         */
+
+        function displayResults(assignments) {
+
+            const outputDiv = document.getElementById('assignment-output');
+
+            outputDiv.innerHTML = '';
+
+            let resultsText = "🎉 Répartition des tâches pour le repas :\n\n";
+
+ 
+
+            Object.keys(assignments).forEach(participant => {
+
+                const assignedItems = assignments[participant];
+
+                const cardHtml = `
+
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+
+                        <p class="text-xl font-bold text-blue-700 mb-2">${participant}</p>
+
+                        ${assignedItems.length > 0 ? 
+
+                            `<ul class="list-disc list-inside space-y-1 text-gray-700 pl-4">
+
+                                ${assignedItems.map(item => `<li class="text-base">${item}</li>`).join('')}
+
+                            </ul>` : 
+
+                            `<p class="text-gray-500 italic">Rien à apporter (chanceux !)</p>`
+
+                        }
+
+                    </div>
+
+                `;
+
+                outputDiv.innerHTML += cardHtml;
+
+                
+
+                resultsText += `${participant} doit apporter : ${assignedItems.length > 0 ? assignedItems.join(', ') : 'Rien.'}\n`;
+
+            });
+
+            
+
+            resultsText += "\n➡️ Organisé via l'app Qui Apporte Quoi ?";
+
+ 
+
+ 
+
+            // Stocker le texte formaté pour la fonction de copie
+
+            document.getElementById('results-section').dataset.copyText = resultsText;
+
+            document.getElementById('results-section').style.display = 'block';
+
+        }
+
+ 
+
+        /**
+
+         * Copie les résultats au format texte dans le presse-papiers.
+
+         */
+
+        function copyResults() {
+
+            const copyText = document.getElementById('results-section').dataset.copyText;
+
+            const copyButton = document.getElementById('copy-text');
+
+            
+
+            if (copyText) {
+
+                // Utiliser execCommand car navigator.clipboard peut être restreint dans un iFrame
+
+                const tempTextArea = document.createElement("textarea");
+
+                tempTextArea.value = copyText;
+
+                document.body.appendChild(tempTextArea);
+
+                tempTextArea.select();
+
+                document.execCommand('copy');
+
+                document.body.removeChild(tempTextArea);
+
+ 
+
+                copyButton.textContent = 'Copié ! ✅';
+
+                setTimeout(() => {
+
+                    copyButton.textContent = 'Copier les résultats';
+
+                }, 2000);
+
+            } else {
+
+                showErrorMessage("Aucun résultat à copier.");
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+ 
+
+ 
+
+ 
